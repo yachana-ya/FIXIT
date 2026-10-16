@@ -49,9 +49,16 @@
     function toggle() { note.classList.toggle("d-none", !safety.checked); }
     safety.addEventListener("change", toggle); toggle();
     // Prevent double submit
-    form.addEventListener("submit", function () {
+    form.addEventListener("submit", function (event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            form.reportValidity();
+            return;
+        }
+        // Invalid forms stay usable; only prevent duplicate valid submissions.
         var btn = document.getElementById("submit-btn");
-        setTimeout(function () { btn.disabled = true; btn.textContent = "Submitting..."; }, 0);
+        btn.disabled = true;
+        btn.textContent = "Submitting...";
     });
 })();
 </script>
