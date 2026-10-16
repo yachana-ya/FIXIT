@@ -5,66 +5,62 @@
 
 {% block content %}
 {% if not user.is_authenticated %}
-<div class="row justify-content-center">
-    <div class="col-lg-9">
-        <div class="card border-0 shadow-sm p-4 p-md-5 mb-4 rounded-4 bg-white">
-            <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="rounded-3 bg-primary bg-opacity-10 text-primary p-3 fs-2">🔧</div>
-                <div>
-                    <h1 class="display-6 fw-bold mb-0">FixIt</h1>
-                    <p class="text-muted mb-0">Campus &amp; Residential Maintenance Platform</p>
-                </div>
+<div class="landing-page">
+    <section class="landing-hero" aria-labelledby="landing-title">
+        <div class="landing-copy">
+            <span class="landing-kicker"><span aria-hidden="true">●</span> CAMPUS MAINTENANCE, MADE CLEAR</span>
+            <h1 id="landing-title">A better way to get campus issues <span>fixed.</span></h1>
+            <p class="landing-lead">Report a problem, follow each update, and confirm the repair when it is done. FixIt keeps students, staff, and maintenance teams on the same page.</p>
+            <div class="landing-actions">
+                {% if allow_signup %}
+                    <a href="{% url 'accounts:signup' %}" class="btn btn-primary btn-lg">Create a student account <span aria-hidden="true">→</span></a>
+                {% endif %}
+                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">Sign in</a>
             </div>
-
-            <p class="lead text-secondary my-3">
-                <em>"FixIt measures whether things actually got fixed, not whether tickets got closed."</em>
-            </p>
-
-            <div class="row g-3 my-2">
-                <div class="col-md-3 col-6">
-                    <div class="border rounded-3 p-3 bg-light h-100">
-                        <div class="fw-semibold text-primary">Students</div>
-                        <small class="text-muted">Raise complaints, track every stage, confirm the fix.</small>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="border rounded-3 p-3 bg-light h-100">
-                        <div class="fw-semibold text-info">Staff</div>
-                        <small class="text-muted">Report issues, follow campus-wide progress.</small>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="border rounded-3 p-3 bg-light h-100">
-                        <div class="fw-semibold text-warning">Workers</div>
-                        <small class="text-muted">Get jobs for your area, update progress, see earnings.</small>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="border rounded-3 p-3 bg-light h-100">
-                        <div class="fw-semibold text-success">Admin</div>
-                        <small class="text-muted">Manage users &amp; access, assign work, pay workers.</small>
-                    </div>
-                </div>
-            </div>
-
-            <hr class="my-4">
-
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
-                <div>
-                    <span class="badge bg-light text-dark border">Version: <strong>{{ version }}</strong></span>
-                    {% if demo_mode %}
-                        <span class="badge bg-warning text-dark ms-1">Demo Mode Active</span>
-                    {% endif %}
-                </div>
-                <div class="d-flex gap-2">
-                    {% if allow_signup %}
-                        <a href="{% url 'accounts:signup' %}" class="btn btn-outline-primary px-4 fw-semibold">Student sign up</a>
-                    {% endif %}
-                    <a href="{% url 'login' %}" class="btn btn-primary px-4 fw-semibold">Sign In to FixIt</a>
-                </div>
-            </div>
+            <p class="landing-note">Staff and maintenance accounts are provided by your campus admin.</p>
         </div>
-    </div>
+
+        <div class="landing-preview" role="img" aria-label="Example complaint tracking card showing a repair in progress">
+            <div class="landing-preview__top">
+                <span class="landing-preview__label"><span aria-hidden="true">●</span> EXAMPLE TRACKING</span>
+                <span class="landing-preview__code">FIX-00128</span>
+            </div>
+            <h2>Leaking tap near Room 204</h2>
+            <div class="landing-preview__status"><span aria-hidden="true"></span> Work in progress</div>
+            <ol class="landing-steps-list" aria-label="Example repair progress">
+                <li class="is-complete"><span>1</span><div><strong>Reported</strong><small>Issue sent to the team</small></div></li>
+                <li class="is-complete"><span>2</span><div><strong>Assigned</strong><small>A worker is on the job</small></div></li>
+                <li class="is-current"><span>3</span><div><strong>In progress</strong><small>Repair update shared</small></div></li>
+                <li><span>4</span><div><strong>Confirmed</strong><small>Requester checks the fix</small></div></li>
+            </ol>
+            <div class="landing-preview__footer"><span>One tracking number</span><span>Updates at every step</span></div>
+        </div>
+    </section>
+
+    <section class="landing-how" aria-labelledby="landing-how-title">
+        <div class="landing-how__heading">
+            <span class="landing-section-label">HOW FIXIT WORKS</span>
+            <h2 id="landing-how-title">From problem to repair, without the guesswork.</h2>
+        </div>
+        <div class="landing-feature-grid">
+            <article class="landing-feature">
+                <span class="landing-feature__number">01</span>
+                <h3>Report the issue</h3>
+                <p>Choose the location and type of problem. Add details and flag anything that may be unsafe.</p>
+            </article>
+            <article class="landing-feature">
+                <span class="landing-feature__number">02</span>
+                <h3>Follow progress</h3>
+                <p>Use your complaint number to see when the team reviews, assigns, and works on the repair.</p>
+            </article>
+            <article class="landing-feature">
+                <span class="landing-feature__number">03</span>
+                <h3>Confirm the repair</h3>
+                <p>Check the result yourself. The complaint is complete when the repair is confirmed.</p>
+            </article>
+        </div>
+        <p class="landing-audience">Made for <strong>students and staff</strong>, with campus teams coordinating every repair.</p>
+    </section>
 </div>
 {% else %}
 

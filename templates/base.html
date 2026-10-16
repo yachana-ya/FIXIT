@@ -76,9 +76,6 @@
                     </ul>
                     {% else %}
                     <ul class="navbar-nav ms-auto align-items-center gap-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'healthz' %}">Health API</a>
-                        </li>
                         {% if allow_signup %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'accounts:signup' %}">Student sign up</a>
@@ -92,11 +89,6 @@
                 </div>
             </div>
         </nav>
-        {% if demo_mode and demo_now %}
-        <div class="demo-bar text-center small py-1">
-            Demo mode &middot; FixIt clock: <strong>{{ demo_now|date:"D d M Y, H:i" }}</strong>
-        </div>
-        {% endif %}
     </header>
 
     <main class="container-xl py-4 flex-grow-1">

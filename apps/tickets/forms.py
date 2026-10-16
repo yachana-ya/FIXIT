@@ -29,9 +29,21 @@ class TicketForm(BootstrapMixin, forms.ModelForm):
             "description": "Details",
         }
         widgets = {
-            "title": forms.TextInput(attrs={"placeholder": "e.g. Ceiling fan not working"}),
-            "location_detail": forms.TextInput(attrs={"placeholder": "e.g. near the window"}),
-            "description": forms.Textarea(attrs={"rows": 4}),
+            "title": forms.TextInput(attrs={
+                "placeholder": "e.g. Ceiling fan is not working",
+                "minlength": 5,
+                "maxlength": 150,
+            }),
+            "location_detail": forms.TextInput(attrs={
+                "placeholder": "e.g. near the window or Room 204",
+                "maxlength": 200,
+            }),
+            "description": forms.Textarea(attrs={
+                "rows": 4,
+                "minlength": 10,
+                "maxlength": 4000,
+                "placeholder": "Describe what happened and when you noticed it.",
+            }),
         }
 
     def __init__(self, *args, **kwargs):
@@ -44,19 +56,34 @@ class TicketForm(BootstrapMixin, forms.ModelForm):
         title = " ".join(self.cleaned_data["title"].split())
         if len(title) < 5:
             raise forms.ValidationError("Please describe the problem in at least 5 characters.")
+        if not _has_meaningful_text(title):
+            raise forms.ValidationError("Use a short description with at least two letters.")
         return title
 
     def clean_description(self):
         description = self.cleaned_data["description"].strip()
         if len(description) < 10:
             raise forms.ValidationError("Please add a few more details (at least 10 characters).")
+        if not _has_meaningful_text(description):
+            raise forms.ValidationError("Please describe the issue using at least two letters.")
         return description
+
+    def clean_location_detail(self):
+        detail = " ".join(self.cleaned_data.get("location_detail", "").split())
+        if detail and not any(character.isalnum() for character in detail):
+            raise forms.ValidationError("Enter a room number or a brief description of the spot.")
+        return detail
 
     def clean_affected_people(self):
         value = self.cleaned_data["affected_people"] or 0
         if value > 500:
             raise forms.ValidationError("Enter a number between 0 and 500.")
         return value
+
+
+def _has_meaningful_text(value: str) -> bool:
+    letters = {character.casefold() for character in value if character.isalpha()}
+    return len(letters) >= 2
 
 
 class TicketReminderForm(BootstrapMixin, forms.Form):
